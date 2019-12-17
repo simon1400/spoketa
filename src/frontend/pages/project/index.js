@@ -3,6 +3,8 @@ import {withRouter} from 'react-router-dom'
 import Page from '../../layout/page'
 import Breadcrumb from '../../components/breadcrumb'
 
+import { Link, Element , Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
+
 import BlockContent from "@sanity/block-content-to-react";
 import sanityClient from "../../../lib/sanity.js";
 import imageUrlBuilder from "@sanity/image-url";
@@ -75,9 +77,9 @@ const Project = ({match}) => {
                 <div className="top-info">
                   <Breadcrumb project={{link: match.params.project, title: data.menu }}/>
                   <h1>{data.title}</h1>
-                  <button className="button_arrow button_green">
+                  <Link className="button_arrow button_green" to="section1" spy={true} smooth={true} duration={1000}>
                     <img src={down} alt="Arrow down" />
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -85,7 +87,7 @@ const Project = ({match}) => {
         </div>
       </section>
 
-      <section className="short-project">
+      <section id="section1" className="short-project">
         <div className="uk-container">
           <div className="uk-grid" uk-grid="">
 

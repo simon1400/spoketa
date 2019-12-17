@@ -1,6 +1,9 @@
 import React, {useState, useEffect} from 'react'
 import Page from '../../layout/page'
 
+// import * as Scroll from 'react-scroll';
+import { Link, Element , Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
+
 import BlockContent from "@sanity/block-content-to-react";
 import sanityClient from "../../../lib/sanity.js";
 import imageUrlBuilder from "@sanity/image-url";
@@ -25,7 +28,6 @@ const query = `*[_type == "homepage"] {
 }[0...1]
 `;
 
-
 const Homepage = () => {
 
   const [dataArray, setDataArray] = useState([])
@@ -35,6 +37,7 @@ const Homepage = () => {
       .fetch(query)
       .then(data => setDataArray([...data]))
       .catch(err => console.log(err));
+
   }, [])
 
   var data = dataArray[0]
@@ -55,9 +58,9 @@ const Homepage = () => {
                 <div className="top-info">
                   <span>SPOKETA s.r.o.</span>
                   <h1>{data.title}</h1>
-                  <button className="button_arrow button_green">
+                  <Link className="button_arrow button_green" to="section1" spy={true} smooth={true} duration={1000}>
                     <img src={down} alt="Arrow down" />
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -65,7 +68,7 @@ const Homepage = () => {
         </div>
       </section>
 
-      <section className="home-short">
+      <section id="section1" className="home-short">
         <div className="uk-container">
           <div className="uk-flex uk-flex-around uk-flex-wrap">
             {data.components.map(item =>

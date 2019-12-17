@@ -280,14 +280,18 @@ button{
   border: none;
   background-color: $green;
   transition: all .5s ease;
+  display: block;
+  display: flex;
   img{
     height: 17px;
+    margin: auto;
     transition: all .5s ease;
+    transform: translateY(0px);
   }
   &:hover{
     background-color: darken($green, 10%);
     img{
-      margin-top: 15px;
+      transform: translateY(10px);
     }
   }
 }
