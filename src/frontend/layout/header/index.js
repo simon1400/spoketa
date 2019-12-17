@@ -26,7 +26,7 @@ const Header = () => {
         <div className="uk-grid" uk-grid="">
           <div className="uk-width-2-3 uk-width-1-4@m">
             <div className="logo-wrap">
-              <img src={logo} alt="Spoketa" />
+              <a href="/"><img src={logo} alt="Spoketa" /></a>
             </div>
           </div>
           <div className="uk-width-1-3 uk-width-3-4@m">
