@@ -1,9 +1,24 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import logo from '../../assets/logo.svg'
+import sanityClient from "../../../lib/sanity.js";
+
+const query = `*[_type == "project"] {
+  menu,
+  slug
+}[0..8] | order(order asc)
+`;
 
 const Header = () => {
 
   const [active, setActive] = useState(false)
+  const [dataArray, setDataArray] = useState([])
+
+  useEffect(() => {
+    sanityClient
+      .fetch(query)
+      .then(data => setDataArray([...data]))
+      .catch(err => console.log(err));
+  }, [])
 
   return(
     <header>
@@ -22,26 +37,20 @@ const Header = () => {
                 </span>
               </button>
             </div>
-            <nav className={active ? 'open-menu' : ''}>
+            {/*<div className="uk-dropdown uk-dropdown-bottom-center" uk-dropdown="pos: bottom-center">
               <ul>
-                <li><a href="/" className="active-mnu">Vnitřní omítky</a></li>
-                <li>
-                  <a href="/">Venkovní omítky</a>
-                  <div className="uk-dropdown uk-dropdown-bottom-center" uk-dropdown="pos: bottom-center">
-                    <ul>
-                      <li><a href="/">Zateplení fasády</a></li>
-                      <li><a href="/">Technologie</a></li>
-                      <li><a href="/">O nás</a></li>
-                      <li><a href="/">Kontakt</a></li>
-                    </ul>
-                  </div>
-                </li>
                 <li><a href="/">Zateplení fasády</a></li>
                 <li><a href="/">Technologie</a></li>
                 <li><a href="/">O nás</a></li>
                 <li><a href="/">Kontakt</a></li>
               </ul>
-            </nav>
+            </div>*/}
+            {dataArray.length ? <nav className={active ? 'open-menu' : ''}>
+              <ul>
+                {/*<li><a href="/" className="active-mnu">Vnitřní omítky</a></li>*/}
+                {dataArray.map((item, index) => <li key={index}><a href={item.slug.current}>{item.menu}</a></li>)}
+              </ul>
+            </nav> : ''}
           </div>
         </div>
       </div>

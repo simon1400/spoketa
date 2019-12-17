@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@sanity/block-content-to-react": "^2.0.7",
+    "@sanity/client": "^0.147.3",
+    "@sanity/image-url": "^0.140.15",
     "hamburgers": "^1.1.3",
     "node-sass": "^4.13.0",
     "react": "^16.12.0",

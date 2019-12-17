@@ -228,6 +228,10 @@ p{
     h1{
       color: white;
     }
+    p{
+      font-size: 60px;
+      font-family: "barlow_thin";
+    }
     span{
       font-size: $button_size;
       font-weight: lighter;
@@ -254,6 +258,12 @@ p{
       color: $text_grey;
       h1{
         color: $text_grey;
+        font-weight: normal;
+        font-family: 'barlow';
+        padding-bottom: 0;
+      }
+      .button_blue{
+        margin-top: 80px;
       }
     }
   }
@@ -302,6 +312,9 @@ button{
 .button_blue{
   height: 70px;
   width: 285px;
+  display: block;
+  text-align: center;
+  line-height: 67px;
   background-color: $blue;
   color: white;
   font-size: $button_size;
@@ -315,6 +328,8 @@ button{
   }
   &:hover{
     background-color: darken($blue, 10%);
+    text-decoration: none;
+    color: white;
     img{
       transform: translateX(10px);
     }
@@ -610,15 +625,22 @@ footer{
 }
 
 
-p{
+.home-short-item{
   ul{
     margin: 0;
     padding: 0;
+    margin-top: 20px;
     li{
       list-style-type: none;
       display: block;
       padding-left: 25px;
       position: relative;
+      font-family: 'barlow';
+      font-size: $p_size;
+      font-weight: lighter;
+      line-height: 30px;
+      font-size: 18px;
+      letter-spacing: 0.5px;
       &:before{
         content: '';
         position: absolute;

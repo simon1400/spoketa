@@ -1,12 +1,34 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import {withRouter} from 'react-router-dom'
 import Page from '../../layout/page'
 import Breadcrumb from '../../components/breadcrumb'
 
-import img from '../../assets/img.jpg'
+import BlockContent from "@sanity/block-content-to-react";
+import sanityClient from "../../../lib/sanity.js";
+import imageUrlBuilder from "@sanity/image-url";
+
 import down from '../../assets/down.svg'
 import right from '../../assets/right.svg'
 
-const Project = () => {
+const imageBuilder = imageUrlBuilder(sanityClient);
+
+const urlFor = source => imageBuilder.image(source);
+
+const query = `*[_type == "project" && slug.current == $url] {
+  image,
+  menu,
+  title,
+  insideTitle,
+  content,
+  components,
+  colorSection,
+  galery,
+  titleHead,
+  description
+}[0...1]
+`;
+
+const Project = ({match}) => {
 
   const [state, setState] = useState({
     width: 0,
@@ -15,34 +37,44 @@ const Project = () => {
     price: 0
   })
 
+  const [dataArray, setDataArray] = useState([])
+
+  useEffect(() => {
+    sanityClient
+      .fetch(query, { url: match.params.project })
+      .then(data => setDataArray([...data]))
+      .catch(err => console.log(err));
+  }, [])
+
+  var data = dataArray[0]
 
   const handleCalculate = (name, value) => {
     if(+value || value === ''){
       var newState = {...state}
       newState[name] = value
       newState.square = newState.width * newState.height
-      newState.price = newState.square * 195
+      newState.price = newState.square * data.colorSection.price
       setState({...newState})
     }
   }
 
-  return(
-    <Page title="Project" id="project">
+  return dataArray.length ?
+    <Page title={data.titleHead} description={data.description} id="project">
       <section className="sec-head">
         <div className="uk-container">
           <div className="uk-grid uk-grid-collapse" uk-grid="">
             <div className="uk-width-1-1 uk-width-1-3@m">
               <div className="img-top-wrap">
                 <div className="img-top">
-                  <img src={img} alt="Description top" />
+                  <img src={urlFor(data.image).url()} alt={data.title} />
                 </div>
               </div>
             </div>
             <div className="uk-width-1-1 uk-width-2-3@m">
               <div className="top-info-wrap">
                 <div className="top-info">
-                  <Breadcrumb />
-                  <h1>Spolehlivý a precizní partner pro dokončení omítek a fasád</h1>
+                  <Breadcrumb project={{link: match.params.project, title: data.menu }}/>
+                  <h1>{data.title}</h1>
                   <button className="button_arrow button_green">
                     <img src={down} alt="Arrow down" />
                   </button>
@@ -59,67 +91,31 @@ const Project = () => {
 
             <div className="uk-width-1-1">
               <div className="short-project-head home-short-item">
-                <h2>Strojní vnitřní omítky</h2>
-                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
+                <h2>{data.insideTitle}</h2>
+                <BlockContent blocks={data.content} />
               </div>
             </div>
 
-            <div className="uk-width-1-1">
-              <div className="short-project-item home-short-item">
-                <div className="uk-grid" uk-grid="">
-                  <div className="uk-width-1-1 uk-width-1-4@m">
-                    <div className="short-project-img-wrap">
-                      <img src={img} alt="Title"/>
-                      <a href="/" className="button_link">
-                        <img src={right} alt="right" />
-                      </a>
+            {data.components.map((item, index) =>
+              <div key={item._key} className={`uk-width-1-1${(index + 1) === data.components.length ? ' uk-margin-large-bottom' : ''}`}>
+                <div className="short-project-item home-short-item">
+                  <div className="uk-grid" uk-grid="">
+                    <div className="uk-width-1-1 uk-width-1-4@m">
+                      <div className="short-project-img-wrap">
+                        <img src={urlFor(item.image).url()} alt={item.title}/>
+                        <a href={item.link} className="button_link">
+                          <img src={right} alt="right" />
+                        </a>
+                      </div>
                     </div>
-                  </div>
-                  <div className="uk-width-1-1 uk-width-3-4@m uk-flex uk-flex-center uk-flex-column">
-                    <h2>Strojní vnitřní omítky</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
+                    <div className="uk-width-1-1 uk-width-3-4@m uk-flex uk-flex-center uk-flex-column">
+                      <h2>{item.title}</h2>
+                      <BlockContent blocks={item.content} />
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-
-            <div className="uk-width-1-1">
-              <div className="short-project-item home-short-item">
-                <div className="uk-grid" uk-grid="">
-                  <div className="uk-width-1-1 uk-width-1-4@m">
-                    <div className="short-project-img-wrap">
-                      <img src={img} alt="Title"/>
-                      <a href="/" className="button_link">
-                        <img src={right} alt="right" />
-                      </a>
-                    </div>
-                  </div>
-                  <div className="uk-width-1-1 uk-width-3-4@m uk-flex uk-flex-center uk-flex-column">
-                    <h2>Strojní vnitřní omítky</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="uk-width-1-1">
-              <div className="short-project-item home-short-item uk-margin-large-bottom">
-                <div className="uk-grid" uk-grid="">
-                  <div className="uk-width-1-1 uk-width-1-4@m">
-                    <div className="short-project-img-wrap">
-                      <img src={img} alt="Title"/>
-                      <a href="/" className="button_link">
-                        <img src={right} alt="right" />
-                      </a>
-                    </div>
-                  </div>
-                  <div className="uk-width-1-1 uk-width-3-4@m uk-flex uk-flex-center uk-flex-column">
-                    <h2>Strojní vnitřní omítky</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
+            )}
 
           </div>
         </div>
@@ -132,8 +128,8 @@ const Project = () => {
             <div className="uk-width-1-1 uk-width-2-3@m">
               <div className="top-info-wrap calculator">
                 <div className="top-info">
-                  <h1>Cena jádrové omítky od 195 Kč/m<sup>2</sup></h1>
-                  <h2>Vyzkoušejte kalkulačku jádrové omítky</h2>
+                  <h1>{data.colorSection.title}</h1>
+                  <h2>{data.colorSection.content}</h2>
                   <div className="uk-grid uk-child-width-1-1 uk-child-width-1-2@m" uk-grid="">
                     <div>
                       <div className={`animate-input ${state.width ? 'active-input' : ''}`}>
@@ -161,7 +157,7 @@ const Project = () => {
             <div className="uk-width-1-1 uk-width-1-3@m">
               <div className="img-top-wrap">
                 <div className="img-top">
-                  <img src={img} alt="Description top" />
+                  <img src={urlFor(data.colorSection.image).url()} alt={data.colorSection.title} />
                 </div>
               </div>
             </div>
@@ -174,8 +170,8 @@ const Project = () => {
         <div className="uk-container">
           <div className="uk-grid uk-child-width-1-1" uk-grid="">
             <div>
-              <h2>Poslední reference</h2>
-              <p>Lorem ipsum dolor sit amet, <a href="/">consectetuer adipiscing elit</a>, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis.</p>
+              <h2>{data.galery.title}</h2>
+              <BlockContent blocks={data.galery.content} />
             </div>
           </div>
         </div>
@@ -185,76 +181,15 @@ const Project = () => {
         <div className="uk-position-relative uk-visible-toggle uk-light" tabIndex="-1" uk-slider="">
 
           <ul className="uk-slider-items uk-child-width-1-3 uk-child-width-1-6@m uk-grid">
-            <li>
-              <div className="uk-panel">
-                <div className="galery-wrap-img">
-                  <img src={img} alt="" />
+            {data.galery.images.map((item, index) =>
+              <li key={index}>
+                <div className="uk-panel">
+                  <div className="galery-wrap-img">
+                    <img src={urlFor(item).url()} alt="" />
+                  </div>
                 </div>
-              </div>
-            </li>
-            <li>
-              <div className="uk-panel">
-                <div className="galery-wrap-img">
-                  <img src={img} alt="" />
-                </div>
-              </div>
-            </li>
-            <li>
-              <div className="uk-panel">
-                <div className="galery-wrap-img">
-                  <img src={img} alt="" />
-                </div>
-              </div>
-            </li>
-            <li>
-              <div className="uk-panel">
-                <div className="galery-wrap-img">
-                  <img src={img} alt="" />
-                </div>
-              </div>
-            </li>
-            <li>
-              <div className="uk-panel">
-                <div className="galery-wrap-img">
-                  <img src={img} alt="" />
-                </div>
-              </div>
-            </li>
-            <li>
-              <div className="uk-panel">
-                <div className="galery-wrap-img">
-                  <img src={img} alt="" />
-                </div>
-              </div>
-            </li>
-            <li>
-              <div className="uk-panel">
-                <div className="galery-wrap-img">
-                  <img src={img} alt="" />
-                </div>
-              </div>
-            </li>
-            <li>
-              <div className="uk-panel">
-                <div className="galery-wrap-img">
-                  <img src={img} alt="" />
-                </div>
-              </div>
-            </li>
-            <li>
-              <div className="uk-panel">
-                <div className="galery-wrap-img">
-                  <img src={img} alt="" />
-                </div>
-              </div>
-            </li>
-            <li>
-              <div className="uk-panel">
-                <div className="galery-wrap-img">
-                  <img src={img} alt="" />
-                </div>
-              </div>
-            </li>
+              </li>
+            )}
           </ul>
 
           <a className="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous="" uk-slider-item="previous"></a>
@@ -262,8 +197,7 @@ const Project = () => {
 
         </div>
       </section>
-    </Page>
-  )
+    </Page> : ''
 }
 
-export default Project
+export default withRouter(Project)
