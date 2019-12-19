@@ -73,9 +73,9 @@ const Homepage = () => {
           <div className="uk-flex uk-flex-around uk-flex-wrap">
             {data.components.map(item =>
               <div key={item._key} className="home-short-item">
-                <h2>{item.title}</h2>
+                <h2><a href={`/project${item.link}`}>{item.title}</a></h2>
                 <BlockContent blocks={item.content} />
-                <a href={item.link} className="button_bare">Více informací <img src={right} alt="Arrow right" /></a>
+                <a href={`/project${item.link}`} className="button_bare">Více informací <img src={right} alt="Arrow right" /></a>
               </div>
             )}
           </div>
@@ -92,7 +92,7 @@ const Homepage = () => {
                   <span>Garance kvality</span>
                   <h1>{data.colorSection.title}</h1>
                   <BlockContent blocks={data.colorSection.content} />
-                  <a href={data.colorSection.link} className="button_blue">Více o nás <img src={right} alt="Arrow right" /></a>
+                  <a href={`/project/${data.colorSection.link}`} className="button_blue">Více o nás <img src={right} alt="Arrow right" /></a>
                 </div>
               </div>
             </div>
@@ -121,23 +121,29 @@ const Homepage = () => {
       </section>
 
       <section className="galery">
-        <div className="uk-position-relative uk-visible-toggle uk-light" tabIndex="-1" uk-slider="">
+        <div className="uk-container-large">
+          <div className="uk-grid uk-child-width-1-1" uk-grid="">
+            <div>
+              <div className="uk-position-relative uk-visible-toggle uk-light" tabIndex="-1" uk-slider="center: true; sets: true;">
 
-          <ul className="uk-slider-items uk-child-width-1-3 uk-child-width-1-6@m uk-grid">
-            {data.galery.images.map(item =>
-              <li key={item._key}>
-                <div className="uk-panel">
-                  <div className="galery-wrap-img">
-                    <img src={urlFor(item.asset).url()} alt="" />
-                  </div>
-                </div>
-              </li>
-            )}
-          </ul>
+                <ul className="uk-slider-items uk-child-width-1-3 uk-child-width-1-6@m uk-grid">
+                  {data.galery.images.map(item =>
+                    <li key={item._key}>
+                      <div className="uk-panel">
+                        <div className="galery-wrap-img">
+                          <img src={urlFor(item.asset).url()} alt="" />
+                        </div>
+                      </div>
+                    </li>
+                  )}
+                </ul>
 
-          <a className="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous="" uk-slider-item="previous"></a>
-          <a className="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next="" uk-slider-item="next"></a>
+                <a className="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous="" uk-slider-item="previous"></a>
+                <a className="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next="" uk-slider-item="next"></a>
 
+              </div>
+            </div>
+          </div>
         </div>
       </section>
     </Page> : ''

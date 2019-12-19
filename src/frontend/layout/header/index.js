@@ -23,7 +23,7 @@ const Header = () => {
   return(
     <header>
       <div className="uk-container">
-        <div className="uk-grid" uk-grid="">
+        <div className="uk-grid uk-grid-collapse" uk-grid="">
           <div className="uk-width-2-3 uk-width-1-4@m">
             <div className="logo-wrap">
               <a href="/"><img src={logo} alt="Spoketa" /></a>
@@ -48,7 +48,7 @@ const Header = () => {
             {dataArray.length ? <nav className={active ? 'open-menu' : ''}>
               <ul>
                 {/*<li><a href="/" className="active-mnu">Vnitřní omítky</a></li>*/}
-                {dataArray.map((item, index) => <li key={index}><a href={item.slug.current}>{item.menu}</a></li>)}
+                {dataArray.map((item, index) => <li key={index}><a href={`/project/${item.slug.current}`}>{item.menu}</a></li>)}
               </ul>
             </nav> : ''}
           </div>

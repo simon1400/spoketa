@@ -12,7 +12,7 @@ html{
 }
 
 body{
-  font-family: 'barlow';
+  font-family: 'barlow_condensed';
   overflow-x: hidden;
   // -webkit-font-smoothing: antialiased;
 }
@@ -69,6 +69,7 @@ header{
           color: $text_grey;
           font-size: $menu_size;
           position: relative;
+          font-family: 'barlow_condensed_lighter';
           &:after{
             content: '';
             display: block;
@@ -137,13 +138,11 @@ header{
 .img-top-wrap{
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: flex-start;
   height: 100%;
   min-width: 432px;
   z-index: 100;
   position: relative;
-  float: right;
-  margin-right: -90px;
   .img-top{
     width: 432px;
     height: 432px;
@@ -172,14 +171,16 @@ h1{
 }
 
 h2{
-  font-family: 'barlow_thin';
+  font-family: 'barlow_condensed_lighter';
+  a{
+    font-family: 'barlow_condensed_lighter';
+  }
 }
 
 p{
   font-size: $p_size;
-  font-weight: lighter;
+  font-family: 'barlow_light';
   line-height: 30px;
-  letter-spacing: 0.5px;
   a{
     color: $blue;
     position: relative;
@@ -217,24 +218,30 @@ p{
     content: '';
     display: block;
     position: absolute;
+    left: -25px;
     z-index: -1;
     height: 100%;
     width: 100vw;
     background: linear-gradient(60deg, rgba(34,116,179,1) 0%, rgba(34,162,179,1) 100%);
   }
   .top-info{
-    padding: 0 60px 0 120px;
+    padding: 0 60px 0 90px;
     color: white;
+    .button_arrow{
+      margin-bottom: -35px;
+    }
     h1{
       color: white;
     }
     p{
       font-size: 60px;
       font-family: "barlow_thin";
+      line-height: 70px;
+      margin-top: 0;
     }
     span{
       font-size: $button_size;
-      font-weight: lighter;
+      font-family: "barlow_condensed_lighter";
       letter-spacing: 1px;
     }
   }
@@ -243,8 +250,8 @@ p{
 .right_block{
   padding: 65px 0;
   .img-top-wrap{
-    justify-content: flex-start;
-    float: left;
+    justify-content: flex-end;
+    float: right;
     margin-left: -90px;
     margin-right: 0;
   }
@@ -252,14 +259,16 @@ p{
     &:before{
       background: linear-gradient(60deg, rgba(128,191,31,1) 0%, rgba(171,210,34,1) 100%);
       right: 0;
+      left: auto;
     }
     .top-info{
       padding: 0 120px 0 0px;
       color: $text_grey;
+      width: 100%;
       h1{
         color: $text_grey;
         font-weight: normal;
-        font-family: 'barlow';
+        font-family: 'barlow_condensed';
         padding-bottom: 0;
       }
       .button_blue{
@@ -271,7 +280,7 @@ p{
 
 button{
   cursor: pointer;
-  font-weight: lighter;
+  font-family: 'barlow_condensed_lighter';
 }
 
 .button_arrow{
@@ -299,6 +308,7 @@ button{
 .button_bare{
   font-size: $button_size;
   color: $blue;
+  font-family: 'barlow_condensed_lighter';
   &:hover{
     text-decoration: none;
     color: $blue;
@@ -320,6 +330,7 @@ button{
   text-align: center;
   line-height: 67px;
   background-color: $blue;
+  font-family: 'barlow_condensed_lighter';
   color: white;
   font-size: $button_size;
   border: none;
@@ -347,6 +358,12 @@ button{
   h2{
     font-size: $h3;
     color: $blue;
+    a{
+      color: $blue;
+      &:hover{
+        text-decoration: none;
+      }
+    }
   }
 }
 
@@ -390,6 +407,15 @@ footer{
     h2{
       color: white;
       font-size: $h3;
+      margin-bottom: 0;
+    }
+    .wrap-footer-head{
+      display: flex;
+      align-items: center;
+      height: 100%;
+      h2{
+        font-family: 'barlow_thin';
+      }
     }
   }
   .footer-button-wrap{
@@ -405,12 +431,14 @@ footer{
     display: block;
     color: $text_grey;
     font-size: $button_size;
+    font-family: 'barlow_condensed_lighter';
     text-align: center;
     line-height: 70px;
     transition: all .5s ease;
     img{
       height: 13px;
       margin-right: 10px;
+      margin-top: -3px;
     }
     &:first-child{
       margin-bottom: 10px;
@@ -434,7 +462,7 @@ footer{
       img{
         margin-left: 10px;
         vertical-align: middle;
-        margin-top: -3px;
+        margin-top: -4px;
       }
     }
   }
@@ -451,6 +479,7 @@ footer{
         list-style-type: none;
         position: relative;
         a{
+          display: inline-block;
           &:hover{
             text-decoration: none;
             &:after{
@@ -470,20 +499,19 @@ footer{
             transition: all .5s ease;
           }
         }
+        img{
+          display: inline-block;
+          height: 11px;
+          filter: brightness(0) invert(1);
+          margin-left: 15px;
+          margin-right: 15px;
+          margin-top: -3px;
+        }
         a, span{
           color: white;
           font-size: 20px;
           position: relative;
           letter-spacing: normal!important;
-        }
-        &:not(:last-child){
-          padding-right: 35px;
-          &:after{
-            content: '>';
-            position: absolute;
-            right: 15px;
-            font-size: 20px;
-          }
         }
       }
     }
@@ -493,63 +521,63 @@ footer{
 
 
 .top-info-wrap.calculator{
+  padding-right: 60px;
   h1{
     padding: 0;
     font-size: 40px;
-    font-weight: bold;
+    font-family: 'barlow_condensed';
   }
   h2{
     font-size: 40px;
     margin-top: 0;
+    color: $text_grey;
     margin-bottom: 0;
-    font-weight: lighter;
+    font-family: 'barlow_condensed_lighter';
+  }
+  p{
+    line-height: 20px;
+  }
+  .top-info{
+    .uk-grid-margin{
+      margin-top: 0!important;
+    }
   }
   .animate-input{
     position: relative;
     margin-top: 40px;
-    &.active-input{
+    max-width: 300px;
+    input{
+      height: 70px;
+      width: calc(100% - 164px);
+      max-width: 100%;
+      background-color: transparent;
+      border: 2px solid rgba(white, .8);
+      padding: 0 30px;
+      padding-right: 130px;
+      font-size: 34px;
+      color: white;
+      &:focus{
+        outline: none;
+      }
+    }
+    .input-info-wrap{
+      position: absolute;
+      right: 18px;
+      top: 50%;
+      transform: translateY(-50%);
       label{
-        transform: none;
-        top: -30px;
+        display: inline-block;
+        font-weight: bold;
         font-size: 20px;
         color: $text_grey;
         z-index: 100;
         padding: 0 0;
         padding-left: 15px;
       }
-    }
-    input{
-      height: 70px;
-      width: calc(100% - 60px);
-      background-color: transparent;
-      border: 2px solid rgba(white, .8);
-      padding: 0 30px;
-      font-size: 34px;
-      color: white;
-      &:focus{
-        outline: none;
-        + label{
-          transform: none;
-          top: -30px;
-          font-size: 20px;
-          color: $text_grey;
-          z-index: 100;
-          padding: 0 0;
-          padding-left: 15px;
-        }
+      img{
+        height: 24px;
+        margin-top: -5px;
       }
-    }
-    label{
-      position: absolute;
-      display: inline-block;
-      top: 45%;
-      transform: translateY(-50%);
-      font-size: 34px;
-      z-index: -1;
-      color: rgba(white, .6);
-      font-weight: bold;
-      padding: 0 30px;
-      transition: all .5s ease;
     }
 
   }
@@ -561,6 +589,8 @@ footer{
     padding-top: 20px;
     padding-bottom: 20px;
     height: calc(100% - 80px);
+    width: 100%;
+    max-width: 100%;
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -578,7 +608,7 @@ footer{
     margin: 0;
     margin-top: 10px;
     &:first-of-type{
-      margin-top: 30px;
+      margin-top: 50px;
     }
   }
 }
@@ -619,9 +649,17 @@ footer{
         display: flex;
         align-items: center;
         justify-content: center;
+        transition: all .5s ease;
         img{
           height: 13px;
           filter: brightness(0) invert(1);
+          transition: all .5s ease;
+        }
+        &:hover{
+          background-color: darken($blue, 10%);
+          img{
+            transform: translateX(5px);
+          }
         }
       }
     }
@@ -639,9 +677,8 @@ footer{
       display: block;
       padding-left: 25px;
       position: relative;
-      font-family: 'barlow';
+      font-family: 'barlow_condensed_lighter';
       font-size: $p_size;
-      font-weight: lighter;
       line-height: 30px;
       font-size: 18px;
       letter-spacing: 0.5px;

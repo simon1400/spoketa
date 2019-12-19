@@ -39,12 +39,14 @@ const Footer = () => {
         <div className="upper-footer">
           <div className="uk-grid uk-child-width-1-1 uk-child-width-1-2@s uk-grid-small" uk-grid="">
             <div>
-              <h2>{data.footerHead}</h2>
+              <div className="wrap-footer-head">
+                <h2>{data.footerHead}</h2>
+              </div>
             </div>
             <div>
               <div className="footer-button-wrap">
-                <a href="/" className="button-green"><img src={phone} alt="Icon phone"/> {data.phone}</a>
-                <a href="/" className="button-green"><img src={letter} alt="Icon letter"/>{data.email}</a>
+                <a href={`tel:${data.phone.split(' ').join('')}`} className="button-green"><img src={phone} alt="Icon phone"/>{data.phone}</a>
+                <a href={`mailto:${data.email}`} className="button-green"><img src={letter} alt="Icon letter"/>{data.email}</a>
               </div>
             </div>
           </div>

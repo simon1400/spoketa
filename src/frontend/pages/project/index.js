@@ -11,6 +11,7 @@ import imageUrlBuilder from "@sanity/image-url";
 
 import down from '../../assets/down.svg'
 import right from '../../assets/right.svg'
+import pen from '../../assets/pen.svg'
 
 const imageBuilder = imageUrlBuilder(sanityClient);
 
@@ -26,9 +27,15 @@ const query = `*[_type == "project" && slug.current == $url] {
   colorSection,
   galery,
   titleHead,
-  description
+  "links": components[].link._ref,
+  description,
 }[0...1]
 `;
+
+const newQuery = `*[_type == "product" && _id match $id] {
+  slug,
+  title
+}[0...100]`
 
 const Project = ({match}) => {
 
@@ -41,6 +48,8 @@ const Project = ({match}) => {
 
   const [dataArray, setDataArray] = useState([])
 
+  const [links, setLinks] = useState([])
+
   useEffect(() => {
     sanityClient
       .fetch(query, { url: match.params.project })
@@ -48,17 +57,32 @@ const Project = ({match}) => {
       .catch(err => console.log(err));
   }, [])
 
+  useEffect(() => {
+    if(dataArray.length){
+      sanityClient
+        .fetch(newQuery, { id: JSON.stringify(dataArray[0].links)})
+        .then(data => setLinks([...data]))
+        .catch(err => console.log(err));
+    }
+  }, [dataArray.length])
+
   var data = dataArray[0]
 
   const handleCalculate = (name, value) => {
-    if(+value || value === ''){
+    if((+value || value === '') && +value <= 1000){
       var newState = {...state}
-      newState[name] = value
+      if(+value){
+        newState[name] = Math.floor(value)
+      }else if(value === ''){
+        newState[name] = 0
+      }
       newState.square = newState.width * newState.height
       newState.price = newState.square * data.colorSection.price
       setState({...newState})
     }
   }
+
+  console.log(links);
 
   return dataArray.length ?
     <Page title={data.titleHead} description={data.description} id="project">
@@ -105,13 +129,13 @@ const Project = ({match}) => {
                     <div className="uk-width-1-1 uk-width-1-4@m">
                       <div className="short-project-img-wrap">
                         <img src={urlFor(item.image).url()} alt={item.title}/>
-                        <a href={item.link} className="button_link">
+                        {links[index] && <a href={`/project/${match.params.project}/${links[index].slug.current}`} className="button_link">
                           <img src={right} alt="right" />
-                        </a>
+                        </a>}
                       </div>
                     </div>
                     <div className="uk-width-1-1 uk-width-3-4@m uk-flex uk-flex-center uk-flex-column">
-                      <h2>{item.title}</h2>
+                      <h2><a href={`/project/${match.params.project}${item.link}`}>{item.title}</a></h2>
                       <BlockContent blocks={item.content} />
                     </div>
                   </div>
@@ -132,15 +156,21 @@ const Project = ({match}) => {
                 <div className="top-info">
                   <h1>{data.colorSection.title}</h1>
                   <h2>{data.colorSection.content}</h2>
-                  <div className="uk-grid uk-child-width-1-1 uk-child-width-1-2@m" uk-grid="">
+                  <div className="uk-grid uk-grid-small uk-child-width-1-1 uk-child-width-1-2@m" uk-grid="">
                     <div>
                       <div className={`animate-input ${state.width ? 'active-input' : ''}`}>
-                        <input type="text" value={state.width !== 0 ? state.width : ''} onChange={e => handleCalculate('width', e.target.value)} />
-                        <label>šířka zdi</label>
+                        <input type="text" value={state.width} onChange={e => handleCalculate('width', e.target.value)} />
+                        <div className="input-info-wrap">
+                          <img src={pen} alt="pen" />
+                          <label>šířka zdi</label>
+                        </div>
                       </div>
                       <div className={`animate-input ${state.height ? 'active-input' : ''}`}>
-                        <input type="text" value={state.height !== 0 ? state.height : ''} onChange={e => handleCalculate('height', e.target.value)} />
-                        <label>výška zdi</label>
+                        <input type="text" value={state.height} onChange={e => handleCalculate('height', e.target.value)} />
+                        <div className="input-info-wrap">
+                          <img src={pen} alt="pen" />
+                          <label>výška zdi</label>
+                        </div>
                       </div>
                     </div>
                     <div>
@@ -180,23 +210,29 @@ const Project = ({match}) => {
       </section>
 
       <section className="galery">
-        <div className="uk-position-relative uk-visible-toggle uk-light" tabIndex="-1" uk-slider="">
+        <div className="uk-container-large">
+          <div className="uk-grid uk-child-width-1-1" uk-grid="">
+            <div>
+              <div className="uk-position-relative uk-visible-toggle uk-light" tabIndex="-1" uk-slider="center: true; sets: true;">
 
-          <ul className="uk-slider-items uk-child-width-1-3 uk-child-width-1-6@m uk-grid">
-            {data.galery.images.map((item, index) =>
-              <li key={index}>
-                <div className="uk-panel">
-                  <div className="galery-wrap-img">
-                    <img src={urlFor(item).url()} alt="" />
-                  </div>
-                </div>
-              </li>
-            )}
-          </ul>
+                <ul className="uk-slider-items uk-child-width-1-3 uk-child-width-1-6@m uk-grid">
+                  {data.galery.images.map(item =>
+                    <li key={item._key}>
+                      <div className="uk-panel">
+                        <div className="galery-wrap-img">
+                          <img src={urlFor(item.asset).url()} alt="" />
+                        </div>
+                      </div>
+                    </li>
+                  )}
+                </ul>
 
-          <a className="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous="" uk-slider-item="previous"></a>
-          <a className="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next="" uk-slider-item="next"></a>
+                <a className="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous="" uk-slider-item="previous"></a>
+                <a className="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next="" uk-slider-item="next"></a>
 
+              </div>
+            </div>
+          </div>
         </div>
       </section>
     </Page> : ''
