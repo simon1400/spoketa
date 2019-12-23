@@ -120,32 +120,32 @@ const Homepage = () => {
         </div>
       </section>
 
-      <section className="galery">
-        <div className="uk-container-large">
+      {data.galery && data.galery.images.length && <section className="galery">
+        <div className="uk-container">
           <div className="uk-grid uk-child-width-1-1" uk-grid="">
             <div>
-              <div className="uk-position-relative uk-visible-toggle uk-light" tabIndex="-1" uk-slider="center: true; sets: true;">
-
-                <ul className="uk-slider-items uk-child-width-1-3 uk-child-width-1-6@m uk-grid">
-                  {data.galery.images.map(item =>
-                    <li key={item._key}>
-                      <div className="uk-panel">
-                        <div className="galery-wrap-img">
-                          <img src={urlFor(item.asset).url()} alt="" />
+             {/*index: ${Math.floor(data.galery.images.length / 2)}`}*/}
+              <div uk-slider="autoplay: true">
+                <div className="uk-position-relative uk-visible-toggle uk-light" tabIndex="-1" >
+                  <ul className="uk-slider-items uk-child-width-1-2 uk-child-width-1-6@m uk-grid" uk-grid="" uk-lightbox="">
+                    {data.galery.images.map(item =>
+                      <li key={item._key}>
+                        <div className="uk-panel">
+                          <div className="galery-wrap-img">
+                            <a href={urlFor(item.asset).url()} data-alt="Modal some">
+                              <img src={urlFor(item.asset).url()} alt="" />
+                            </a>
+                          </div>
                         </div>
-                      </div>
-                    </li>
-                  )}
-                </ul>
-
-                <a className="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous="" uk-slider-item="previous"></a>
-                <a className="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next="" uk-slider-item="next"></a>
-
+                      </li>
+                    )}
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </section>
+      </section>}
     </Page> : ''
 
 }

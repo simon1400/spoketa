@@ -5,6 +5,27 @@
   .menu{
     position: relative;
   }
+  .short-project .short-project-item{
+    .short-project-img-wrap{
+      width: auto;
+      height: auto;
+      overflow: auto;
+      transform: translateY(-5px);
+      > img{
+        display: none;
+      }
+      .button_link{
+        position: static;
+
+      }
+    }
+    h2{
+      padding-left: 15px;
+    }
+    p, ul{
+      padding-left: 15px;
+    }
+  }
   header{
     position: relative;
     .open-menu{

@@ -33,8 +33,8 @@ const query = `*[_type == "project" && slug.current == $url] {
 `;
 
 const newQuery = `*[_type == "product" && _id match $id] {
-  slug,
-  title
+  _id,
+  slug
 }[0...100]`
 
 const Project = ({match}) => {
@@ -82,19 +82,17 @@ const Project = ({match}) => {
     }
   }
 
-  console.log(links);
-
   return dataArray.length ?
     <Page title={data.titleHead} description={data.description} id="project">
       <section className="sec-head">
         <div className="uk-container">
           <div className="uk-grid uk-grid-collapse" uk-grid="">
             <div className="uk-width-1-1 uk-width-1-3@m">
-              <div className="img-top-wrap">
+              {data.image ? <div className="img-top-wrap">
                 <div className="img-top">
                   <img src={urlFor(data.image).url()} alt={data.title} />
                 </div>
-              </div>
+              </div> : ''}
             </div>
             <div className="uk-width-1-1 uk-width-2-3@m">
               <div className="top-info-wrap">
@@ -115,47 +113,53 @@ const Project = ({match}) => {
         <div className="uk-container">
           <div className="uk-grid" uk-grid="">
 
-            <div className="uk-width-1-1">
+            {data.insideTitle || data.content ? <div className="uk-width-1-1">
               <div className="short-project-head home-short-item">
-                <h2>{data.insideTitle}</h2>
-                <BlockContent blocks={data.content} />
+                {data.insideTitle && <h2>{data.insideTitle}</h2>}
+                {data.content && <BlockContent blocks={data.content} />}
               </div>
-            </div>
+            </div> : ''}
 
-            {data.components.map((item, index) =>
-              <div key={item._key} className={`uk-width-1-1${(index + 1) === data.components.length ? ' uk-margin-large-bottom' : ''}`}>
-                <div className="short-project-item home-short-item">
-                  <div className="uk-grid" uk-grid="">
-                    <div className="uk-width-1-1 uk-width-1-4@m">
-                      <div className="short-project-img-wrap">
-                        <img src={urlFor(item.image).url()} alt={item.title}/>
-                        {links[index] && <a href={`/project/${match.params.project}/${links[index].slug.current}`} className="button_link">
-                          <img src={right} alt="right" />
-                        </a>}
+            {data.components && data.components.length && data.components.map((item, index) => {
+              var link_current = links.filter(itemLink => itemLink._id === item.link._ref)
+              if(link_current.length){
+                link_current = link_current[0].slug.current
+                return (
+                  <div key={item._key} className={`uk-width-1-1${(index + 1) === data.components.length ? ' uk-margin-large-bottom' : ''}`}>
+                    <div className="short-project-item home-short-item">
+                      <div className="uk-grid uk-grid-collapse" uk-grid="">
+                        <div className="uk-width-auto">
+                          <div className="short-project-img-wrap">
+                            {item.image && <img src={urlFor(item.image).url()} alt={item.title}/>}
+                            {links[index] && <a href={`/project/${match.params.project}/${link_current}`} className="button_link">
+                              <img src={right} alt="right" />
+                            </a>}
+                          </div>
+                        </div>
+                        <div className="uk-width-expand">
+                          {item.title && <h2><a href={`/project/${match.params.project}${item.link}`}>{item.title}</a></h2>}
+                          {item.content && <BlockContent blocks={item.content} />}
+                        </div>
                       </div>
                     </div>
-                    <div className="uk-width-1-1 uk-width-3-4@m uk-flex uk-flex-center uk-flex-column">
-                      <h2><a href={`/project/${match.params.project}${item.link}`}>{item.title}</a></h2>
-                      <BlockContent blocks={item.content} />
-                    </div>
                   </div>
-                </div>
-              </div>
-            )}
+                )
+              }
+            })}
 
           </div>
         </div>
       </section>
 
-      <section className="right_block">
+      {data.colorSection && (data.colorSection.title || data.colorSection.content) && <section className="right_block">
         <div className="uk-container">
           <div className="uk-grid uk-grid-collapse" uk-grid="">
 
             <div className="uk-width-1-1 uk-width-2-3@m">
               <div className="top-info-wrap calculator">
                 <div className="top-info">
-                  <h1>{data.colorSection.title}</h1>
-                  <h2>{data.colorSection.content}</h2>
+                  {data.colorSection.title && <h1>{data.colorSection.title}</h1>}
+                  {data.colorSection.content && <h2>{data.colorSection.content}</h2>}
                   <div className="uk-grid uk-grid-small uk-child-width-1-1 uk-child-width-1-2@m" uk-grid="">
                     <div>
                       <div className={`animate-input ${state.width ? 'active-input' : ''}`}>
@@ -187,54 +191,55 @@ const Project = ({match}) => {
             </div>
 
             <div className="uk-width-1-1 uk-width-1-3@m">
-              <div className="img-top-wrap">
+              {data.colorSection.image && <div className="img-top-wrap">
                 <div className="img-top">
                   <img src={urlFor(data.colorSection.image).url()} alt={data.colorSection.title} />
                 </div>
-              </div>
+              </div>}
             </div>
 
           </div>
         </div>
-      </section>
+      </section>}
 
-      <section className="reference-info">
+      {data.galery && (data.galery.title || data.galery.content) && <section className="reference-info">
         <div className="uk-container">
           <div className="uk-grid uk-child-width-1-1" uk-grid="">
             <div>
-              <h2>{data.galery.title}</h2>
-              <BlockContent blocks={data.galery.content} />
+              {data.galery.title && <h2>{data.galery.title}</h2>}
+              {data.galery.content && <BlockContent blocks={data.galery.content} />}
             </div>
           </div>
         </div>
-      </section>
+      </section>}
 
-      <section className="galery">
-        <div className="uk-container-large">
+      {data.galery && data.galery.images.length && <section className="galery">
+        <div className="uk-container">
           <div className="uk-grid uk-child-width-1-1" uk-grid="">
             <div>
-              <div className="uk-position-relative uk-visible-toggle uk-light" tabIndex="-1" uk-slider="center: true; sets: true;">
-
-                <ul className="uk-slider-items uk-child-width-1-3 uk-child-width-1-6@m uk-grid">
-                  {data.galery.images.map(item =>
-                    <li key={item._key}>
-                      <div className="uk-panel">
-                        <div className="galery-wrap-img">
-                          <img src={urlFor(item.asset).url()} alt="" />
+             {/*index: ${Math.floor(data.galery.images.length / 2)}`}*/}
+              <div uk-slider="autoplay: true">
+                <div className="uk-position-relative uk-visible-toggle uk-light" tabIndex="-1" >
+                  <ul className="uk-slider-items uk-child-width-1-2 uk-child-width-1-6@m uk-grid" uk-grid="" uk-lightbox="">
+                    {data.galery.images.map(item =>
+                      <li key={item._key}>
+                        <div className="uk-panel">
+                          <div className="galery-wrap-img">
+                            <a href={urlFor(item.asset).url()} data-alt="Modal some">
+                              <img src={urlFor(item.asset).url()} alt="" />
+                            </a>
+                          </div>
                         </div>
-                      </div>
-                    </li>
-                  )}
-                </ul>
-
-                <a className="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous="" uk-slider-item="previous"></a>
-                <a className="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next="" uk-slider-item="next"></a>
-
+                      </li>
+                    )}
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </section>
+      </section>}
+
     </Page> : ''
 }
 
