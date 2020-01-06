@@ -138,7 +138,7 @@ const Article = ({match}) => {
                           </div>
                         </div>
                         <div className="uk-width-expand">
-                          {item.title && <h2><a href={`/${match.params.project}${item.link}`}>{item.title}</a></h2>}
+                          {item.title && <h2><a href={`/${match.params.project}/${link_current}`}>{item.title}</a></h2>}
                           {item.content && <BlockContent blocks={item.content} />}
                         </div>
                       </div>
@@ -159,7 +159,7 @@ const Article = ({match}) => {
                           </div>
                         </div>
                         <div className="uk-width-expand">
-                          {item.title && <h2><a href={`/${match.params.project}${item.link}`}>{item.title}</a></h2>}
+                          {item.title && <h2>{item.title}</h2>}
                           {item.content && <BlockContent blocks={item.content} />}
                         </div>
                       </div>
@@ -189,14 +189,14 @@ const Article = ({match}) => {
                       <input type="text" value={state.width} onChange={e => handleCalculate('width', e.target.value)} />
                       <div className="input-info-wrap">
                         <img src={pen} alt="pen" />
-                        <label>šířka zdi</label>
+                        <label>šířka zdi v m<sup>2</sup></label>
                       </div>
                     </div>
                     <div className={`animate-input ${state.height ? 'active-input' : ''}`}>
                       <input type="text" value={state.height} onChange={e => handleCalculate('height', e.target.value)} />
                       <div className="input-info-wrap">
                         <img src={pen} alt="pen" />
-                        <label>výška zdi</label>
+                        <label>výška zdi v m<sup>2</sup></label>
                       </div>
                     </div>
                   </div>

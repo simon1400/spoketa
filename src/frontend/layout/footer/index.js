@@ -59,7 +59,7 @@ const Footer = () => {
             <div>
               <div className="author">
                 <span>Made in Brno by</span>
-                <img src={hardart} alt="Hardart"/>
+                <a href="mailto:danielkokes@gmail.com?subject=Dotaz ze stranky spoketa.cz"><img src={hardart} alt="Hardart"/></a>
               </div>
             </div>
           </div>
