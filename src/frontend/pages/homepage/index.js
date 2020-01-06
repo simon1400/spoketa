@@ -73,9 +73,9 @@ const Homepage = () => {
           <div className="uk-flex uk-flex-around uk-flex-wrap">
             {data.components.map(item =>
               <div key={item._key} className="home-short-item">
-                <h2><a href={`/project${item.link}`}>{item.title}</a></h2>
+                <h2><a href={`${item.link}`}>{item.title}</a></h2>
                 <BlockContent blocks={item.content} />
-                <a href={`/project${item.link}`} className="button_bare">Více informací <img src={right} alt="Arrow right" /></a>
+                <a href={`${item.link}`} className="button_bare">Více informací <img src={right} alt="Arrow right" /></a>
               </div>
             )}
           </div>
@@ -92,7 +92,7 @@ const Homepage = () => {
                   <span>Garance kvality</span>
                   <h1>{data.colorSection.title}</h1>
                   <BlockContent blocks={data.colorSection.content} />
-                  <a href={`/project/${data.colorSection.link}`} className="button_blue">Více o nás <img src={right} alt="Arrow right" /></a>
+                  <a href={`/${data.colorSection.link}`} className="button_blue">Více o nás <img src={right} alt="Arrow right" /></a>
                 </div>
               </div>
             </div>

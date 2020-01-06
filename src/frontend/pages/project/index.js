@@ -131,13 +131,13 @@ const Project = ({match}) => {
                         <div className="uk-width-auto">
                           <div className="short-project-img-wrap">
                             {item.image && <img src={urlFor(item.image).url()} alt={item.title}/>}
-                            {links[index] && <a href={`/project/${match.params.project}/${link_current}`} className="button_link">
+                            {links[index] && <a href={`/${match.params.project}/${link_current}`} className="button_link">
                               <img src={right} alt="right" />
                             </a>}
                           </div>
                         </div>
                         <div className="uk-width-expand">
-                          {item.title && <h2><a href={`/project/${match.params.project}${item.link}`}>{item.title}</a></h2>}
+                          {item.title && <h2><a href={`/${match.params.project}${item.link}`}>{item.title}</a></h2>}
                           {item.content && <BlockContent blocks={item.content} />}
                         </div>
                       </div>
@@ -160,7 +160,7 @@ const Project = ({match}) => {
                 <div className="top-info">
                   {data.colorSection.title && <h1>{data.colorSection.title}</h1>}
                   {data.colorSection.content && <h2>{data.colorSection.content}</h2>}
-                  <div className="uk-grid uk-grid-small uk-child-width-1-1 uk-child-width-1-2@m" uk-grid="">
+                  <div className="uk-grid uk-grid-small uk-child-width-1-1 uk-child-width-1-2@m uk-margin-top" uk-grid="">
                     <div>
                       <div className={`animate-input ${state.width ? 'active-input' : ''}`}>
                         <input type="text" value={state.width} onChange={e => handleCalculate('width', e.target.value)} />

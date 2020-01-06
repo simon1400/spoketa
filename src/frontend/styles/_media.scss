@@ -5,6 +5,9 @@
   .menu{
     position: relative;
   }
+  .top-info-wrap.calculator{
+    padding-right: 0;
+  }
   .short-project .short-project-item{
     .short-project-img-wrap{
       width: auto;
@@ -86,7 +89,7 @@
     line-height: 50px;
   }
   .right_block{
-    .uk-grid{
+    .uk-container > .uk-grid{
       flex-direction: column-reverse;
     }
     .img-top-wrap{
@@ -129,7 +132,7 @@
       transform: translateX(-50%);
     }
     .top-info{
-      padding: 70px 15px 0 15px;
+      padding: 70px 0px 0 0px;
       button{
         margin-bottom: -50%;
       }
@@ -185,6 +188,9 @@
 
 
 @media (max-width: 480px) {
+  p{
+    font-size: 16px;
+  }
   .top-info-wrap.calculator{
     padding-right: 0;
   }

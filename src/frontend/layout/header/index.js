@@ -4,8 +4,9 @@ import sanityClient from "../../../lib/sanity.js";
 
 const query = `*[_type == "project"] {
   menu,
-  slug
-}[0..8] | order(order asc)
+  slug,
+  order
+} | order(order asc) [0..8]
 `;
 
 const Header = () => {
@@ -48,7 +49,7 @@ const Header = () => {
             {dataArray.length ? <nav className={active ? 'open-menu' : ''}>
               <ul>
                 {/*<li><a href="/" className="active-mnu">Vnitřní omítky</a></li>*/}
-                {dataArray.map((item, index) => <li key={index}><a href={`/project/${item.slug.current}`}>{item.menu}</a></li>)}
+                {dataArray.map((item, index) => <li key={index}><a href={`/${item.slug.current}`}>{item.menu}</a></li>)}
               </ul>
             </nav> : ''}
           </div>

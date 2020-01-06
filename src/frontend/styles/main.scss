@@ -15,6 +15,7 @@ body{
   font-family: 'barlow_condensed';
   overflow-x: hidden;
   // -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .hamburger-wrap{
@@ -378,8 +379,11 @@ button{
   }
 }
 
-.galery{
+.uk-slider{
   padding: 65px 0;
+}
+
+.galery{
   .uk-panel{
     padding-top: 100%;
     position: relative;
@@ -462,6 +466,7 @@ footer{
       text-align: right;
       span{
         font-size: $p_size;
+        font-family: 'barlow_light';
       }
       img{
         margin-left: 10px;
@@ -563,8 +568,8 @@ footer{
   }
   .animate-input{
     position: relative;
-    margin-top: 40px;
-    max-width: 300px;
+    margin-top: 20px;
+    // max-width: 300px;
     input{
       height: 70px;
       width: calc(100% - 164px);
@@ -573,6 +578,7 @@ footer{
       border: 2px solid rgba(white, .8);
       padding: 0 30px;
       padding-right: 130px;
+      font-family: 'barlow_condensed';
       font-size: 34px;
       color: white;
       &:focus{
@@ -586,9 +592,9 @@ footer{
       transform: translateY(-50%);
       label{
         display: inline-block;
-        font-weight: bold;
         font-size: 20px;
-        color: $text_grey;
+        color: #3C3C3C;
+        font-family: 'barlow_condensed_lighter';
         z-index: 100;
         padding: 0 0;
         padding-left: 15px;
@@ -603,11 +609,11 @@ footer{
   .info-price{
     background-color: $blue;
     color: white;
-    margin-top: 40px;
+    margin-top: 20px;
     text-align: center;
     padding-top: 20px;
     padding-bottom: 20px;
-    height: calc(100% - 80px);
+    height: calc(100% - 60px);
     width: 100%;
     max-width: 100%;
     display: flex;
