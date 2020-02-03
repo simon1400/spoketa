@@ -121,7 +121,12 @@ const Project = ({match}) => {
             </div> : ''}
 
             {data.components && data.components.length && data.components.map((item, index) => {
-              var link_current = links.filter(itemLink => itemLink._id === item.link._ref)
+              if(item.link){
+                var link_current = links.filter(itemLink => itemLink._id === item.link._ref)
+              }else{
+                var link_current = []
+              }
+
               if(link_current.length){
                 link_current = link_current[0].slug.current
                 return (

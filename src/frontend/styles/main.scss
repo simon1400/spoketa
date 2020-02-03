@@ -309,6 +309,8 @@ button{
   }
 }
 
+
+
 .button_bare{
   font-size: $button_size;
   color: $blue;
@@ -318,6 +320,7 @@ button{
     color: $blue;
     img{
       margin-left: 20px;
+      margin-top: -7px;
     }
   }
   img{
@@ -342,6 +345,7 @@ button{
   img{
     height: 13px;
     margin-left: 10px;
+    margin-top: -7px;
     filter: brightness(0) invert(1);
     transition: all .5s ease;
   }
@@ -448,7 +452,7 @@ footer{
     img{
       height: 13px;
       margin-right: 10px;
-      margin-top: -3px;
+      margin-top: -7px;
     }
     &:first-child{
       margin-bottom: 10px;
@@ -472,8 +476,8 @@ footer{
       }
       img{
         margin-left: 10px;
-        vertical-align: middle;
-        margin-top: -4px;
+        // vertical-align: middle;
+        margin-top: -7px;
       }
     }
   }
