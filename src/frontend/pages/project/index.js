@@ -38,8 +38,6 @@ const newQuery = `*[_type == "product" && _id match $id] {
 }[0...100]`
 
 
-const Reg_calculate = /^[0-9]{1,2}([,.][0-9]{1,2})?$/;
-
 const Project = ({match}) => {
 
   const [state, setState] = useState({
@@ -75,12 +73,16 @@ const Project = ({match}) => {
     if((+value || value === '') && +value <= 1000){
       var newState = {...state}
       if(+value){
-        newState[name] = Math.floor(value)
+        if(value.substr(0, 1) === 0 || value.substr(0, 1) === "0"){
+          newState[name] = value.substr(1, value.length)
+        }else{
+          newState[name] = value
+        }
       }else if(value === ''){
         newState[name] = 0
       }
-      newState.square = newState.width * newState.height
-      newState.price = newState.square * data.colorSection.price
+      newState.square = Math.round(((newState.width * newState.height) + Number.EPSILON) * 100) / 100
+      newState.price = Math.round(((newState.square * data.colorSection.price) + Number.EPSILON) * 100) / 100
       setState({...newState})
     }
   }
