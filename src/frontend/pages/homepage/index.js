@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import Page from '../../layout/page'
 
 // import * as Scroll from 'react-scroll';
-import { Link, Element , Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
+import { Link } from 'react-scroll'
 
 import BlockContent from "@sanity/block-content-to-react";
 import sanityClient from "../../../lib/sanity.js";
@@ -49,7 +49,7 @@ const Homepage = () => {
             <div className="uk-width-1-1 uk-width-1-3@m">
               <div className="img-top-wrap">
                 <div className="img-top">
-                  <img src={urlFor(data.image).url()} alt={data.titleHead} />
+                  <img src={urlFor(data.image).width(432).url()} alt={data.titleHead} />
                 </div>
               </div>
             </div>
@@ -100,7 +100,7 @@ const Homepage = () => {
             <div className="uk-width-1-1 uk-width-1-3@m">
               <div className="img-top-wrap">
                 <div className="img-top">
-                  <img src={urlFor(data.colorSection.image).url()} alt={data.colorSection.title} />
+                  <img src={urlFor(data.colorSection.image).width(432).url()} alt={data.colorSection.title} />
                 </div>
               </div>
             </div>
@@ -120,11 +120,10 @@ const Homepage = () => {
         </div>
       </section>
 
-      {data.galery && data.galery.images.length && <section className="galery">
+      {data.galery && !!data.galery.images.length && <section className="galery">
         <div className="uk-container">
           <div className="uk-grid uk-child-width-1-1" uk-grid="">
             <div>
-             {/*index: ${Math.floor(data.galery.images.length / 2)}`}*/}
               <div uk-slider="autoplay: true">
                 <div className="uk-position-relative uk-visible-toggle uk-light" tabIndex="-1" >
                   <ul className="uk-slider-items uk-child-width-1-2 uk-child-width-1-6@m uk-grid" uk-grid="" uk-lightbox="">
@@ -133,7 +132,7 @@ const Homepage = () => {
                         <div className="uk-panel">
                           <div className="galery-wrap-img">
                             <a href={urlFor(item.asset).url()} data-alt="Modal some">
-                              <img src={urlFor(item.asset).url()} alt="" />
+                              <img src={urlFor(item.asset).width(167).url()} alt="" />
                             </a>
                           </div>
                         </div>

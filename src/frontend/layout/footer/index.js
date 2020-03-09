@@ -1,16 +1,11 @@
 import React, { useState, useEffect } from 'react'
 
-import BlockContent from "@sanity/block-content-to-react";
 import sanityClient from "../../../lib/sanity.js";
-import imageUrlBuilder from "@sanity/image-url";
 
 import hardart from '../../assets/hardart.svg'
 import phone from '../../assets/phone.svg'
 import letter from '../../assets/letter.svg'
 
-const imageBuilder = imageUrlBuilder(sanityClient);
-
-const urlFor = source => imageBuilder.image(source);
 
 const query = `*[_type == "global"] {
   footerHead,

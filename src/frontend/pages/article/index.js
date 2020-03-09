@@ -3,7 +3,7 @@ import {withRouter} from 'react-router-dom'
 import Page from '../../layout/page'
 import Breadcrumb from '../../components/breadcrumb'
 
-import { Link, Element , Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
+import { Link } from 'react-scroll'
 
 import BlockContent from "@sanity/block-content-to-react";
 import sanityClient from "../../../lib/sanity.js";
@@ -38,6 +38,8 @@ const newQuery = `*[_type == "product" && _id match $id] {
   slug
 }[0...100]`
 
+const Reg_calculate = /^[0-9]{1,2}([,.][0-9]{1,2})?$/;
+
 const Article = ({match}) => {
 
   const [state, setState] = useState({
@@ -69,10 +71,11 @@ const Article = ({match}) => {
   var data = dataArray[0]
 
   const handleCalculate = (name, value) => {
+    console.log(Reg_calculate.test(value));
     if((+value || value === '') && +value <= 1000){
       var newState = {...state}
       if(+value){
-        newState[name] = Math.floor(value)
+        newState[name] = value
       }else if(value === ''){
         newState[name] = 0
       }
@@ -91,7 +94,7 @@ const Article = ({match}) => {
             <div className="uk-width-1-1 uk-width-1-3@m">
               {data.image && <div className="img-top-wrap">
                 <div className="img-top">
-                  <img src={urlFor(data.image).url()} alt={data.title} />
+                  <img src={urlFor(data.image).width(432).url()} alt={data.title} />
                 </div>
               </div>}
             </div>
@@ -121,7 +124,7 @@ const Article = ({match}) => {
               </div>
             </div>
 
-            {data.components && data.components.length && data.components.map((item, index) => {
+            {data.components && !!data.components.length && data.components.map((item, index) => {
               var link_current = item.link ? links.filter(itemLink => itemLink._id === item.link._ref) : ''
               if(link_current.length){
                 link_current = link_current[0].slug.current
@@ -131,7 +134,7 @@ const Article = ({match}) => {
                       <div className="uk-grid uk-grid-collapse" uk-grid="">
                         <div className="uk-width-auto">
                           <div className="short-project-img-wrap">
-                            {item.image && <img src={urlFor(item.image).url()} alt={item.title}/>}
+                            {item.image && <img src={urlFor(item.image).width(252).url()} alt={item.title}/>}
                             {links[index] && <a href={`/${match.params.project}/${link_current}`} className="button_link">
                               <img src={right} alt="right" />
                             </a>}
@@ -152,10 +155,7 @@ const Article = ({match}) => {
                       <div className="uk-grid uk-grid-collapse" uk-grid="">
                         <div className="uk-width-auto">
                           <div className="short-project-img-wrap">
-                            {item.image && <img src={urlFor(item.image).url()} alt={item.title}/>}
-                            {/*{links[index] && <a href={`/${match.params.project}/${link_current}`} className="button_link">
-                              <img src={right} alt="right" />
-                            </a>}*/}
+                            {item.image && <img src={urlFor(item.image).width(252).url()} alt={item.title}/>}
                           </div>
                         </div>
                         <div className="uk-width-expand">
@@ -189,14 +189,14 @@ const Article = ({match}) => {
                       <input type="text" value={state.width} onChange={e => handleCalculate('width', e.target.value)} />
                       <div className="input-info-wrap">
                         <img src={pen} alt="pen" />
-                        <label>šířka zdi v m<sup>2</sup></label>
+                        <label>šířka zdi v m</label>
                       </div>
                     </div>
                     <div className={`animate-input ${state.height ? 'active-input' : ''}`}>
                       <input type="text" value={state.height} onChange={e => handleCalculate('height', e.target.value)} />
                       <div className="input-info-wrap">
                         <img src={pen} alt="pen" />
-                        <label>výška zdi v m<sup>2</sup></label>
+                        <label>výška zdi v m</label>
                       </div>
                     </div>
                   </div>
@@ -216,7 +216,7 @@ const Article = ({match}) => {
             <div className="uk-width-1-1 uk-width-1-3@m">
               {data.colorSection.image && <div className="img-top-wrap">
                 <div className="img-top">
-                  <img src={urlFor(data.colorSection.image).url()} alt="Description top" />
+                  <img src={urlFor(data.colorSection.image).width(432).url()} alt="Description top" />
                 </div>
               </div>}
             </div>
@@ -236,11 +236,10 @@ const Article = ({match}) => {
         </div>
       </section>}
 
-      {data.galery && data.galery.images.length && <section className="galery">
+      {data.galery && !!data.galery.images.length && <section className="galery">
         <div className="uk-container">
           <div className="uk-grid uk-child-width-1-1" uk-grid="">
             <div>
-             {/*index: ${Math.floor(data.galery.images.length / 2)}`}*/}
               <div uk-slider="autoplay: true">
                 <div className="uk-position-relative uk-visible-toggle uk-light" tabIndex="-1" >
                   <ul className="uk-slider-items uk-child-width-1-2 uk-child-width-1-6@m uk-grid" uk-grid="" uk-lightbox="">
@@ -249,7 +248,7 @@ const Article = ({match}) => {
                         <div className="uk-panel">
                           <div className="galery-wrap-img">
                             <a href={urlFor(item.asset).url()} data-alt="Modal some">
-                              <img src={urlFor(item.asset).url()} alt="" />
+                              <img src={urlFor(item.asset).width(167).url()} alt="" />
                             </a>
                           </div>
                         </div>
