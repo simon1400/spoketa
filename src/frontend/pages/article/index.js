@@ -33,7 +33,7 @@ const query = `*[_type == "product" && slug.current == $url] {
 }[0...1]
 `;
 
-const newQuery = `*[_type == "product" && _id match $id] {
+const newQuery = `*[_type == "project" || _type == "product" && _id match $id] {
   _id,
   slug
 }[0...100]`

@@ -23,14 +23,22 @@ const query = `*[_type == "homepage"] {
   slug,
   components,
   colorSection,
+  "links": components[].link._ref,
   galery,
   titleHead
 }[0...1]
 `;
 
+const newQuery = `*[_type == "project" || _type == "product" && _id match $id] {
+  _id,
+  slug
+}[0...100]`
+
 const Homepage = () => {
 
   const [dataArray, setDataArray] = useState([])
+
+  const [links, setLinks] = useState([])
 
   useEffect(() => {
     sanityClient
@@ -39,6 +47,18 @@ const Homepage = () => {
       .catch(err => console.log(err));
 
   }, [])
+
+  useEffect(() => {
+    if(dataArray.length){
+      sanityClient
+        .fetch(newQuery, { id: JSON.stringify(dataArray[0].links)})
+        .then(data => {
+          setLinks([...data])
+          console.log(data);
+        })
+        .catch(err => console.log(err));
+    }
+  }, [dataArray.length])
 
   var data = dataArray[0]
 
@@ -71,12 +91,26 @@ const Homepage = () => {
       <section id="section1" className="home-short">
         <div className="uk-container">
           <div className="uk-flex uk-flex-around uk-flex-wrap">
-            {data.components.map(item =>
-              <div key={item._key} className="home-short-item">
-                <h2><a href={`${item.link}`}>{item.title}</a></h2>
-                <BlockContent blocks={item.content} />
-                <a href={`${item.link}`} className="button_bare">Více informací <img src={right} alt="Arrow right" /></a>
-              </div>
+            {data.components && !!data.components.length && data.components.map(item => {
+              var link_current;
+              if(item.link){
+                link_current = links.filter(itemLink => itemLink._id === item.link._ref)
+              }else{
+                link_current = []
+              }
+
+              if(link_current.length){
+                link_current = link_current[0].slug.current
+                return (
+                  <div key={item._key} className="home-short-item">
+                    <h2><a href={`${link_current}`}>{item.title}</a></h2>
+                    <BlockContent blocks={item.content} />
+                    <a href={`${link_current}`} className="button_bare">Více informací <img src={right} alt="Arrow right" /></a>
+                  </div>
+                )
+              }
+            }
+
             )}
           </div>
         </div>
