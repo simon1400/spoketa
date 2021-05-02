@@ -1,0 +1,47 @@
+@font-face {
+    font-family: 'barlow_condensed';
+    src: url('../fonts/regular/barlowcondensed-regular.eot');
+    src: url('../fonts/regular/barlowcondensed-regular.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/regular/barlowcondensed-regular.woff2') format('woff2'),
+         url('../fonts/regular/barlowcondensed-regular.woff') format('woff'),
+         url('../fonts/regular/barlowcondensed-regular.ttf') format('truetype'),
+         url('../fonts/regular/barlowcondensed-regular.svg#barlow_condensedregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'barlow_condensed_lighter';
+    src: url('../fonts/condensed_light/barlowcondensed-light.eot');
+    src: url('../fonts/condensed_light/barlowcondensed-light.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/condensed_light/barlowcondensed-light.woff2') format('woff2'),
+         url('../fonts/condensed_light/barlowcondensed-light.woff') format('woff'),
+         url('../fonts/condensed_light/barlowcondensed-light.ttf') format('truetype'),
+         url('../fonts/condensed_light/barlowcondensed-light.svg#barlow_condensedlight') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'barlow_light';
+    src: url('../fonts/light/barlow-light.eot');
+    src: url('../fonts/light/barlow-light.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/light/barlow-light.woff2') format('woff2'),
+         url('../fonts/light/barlow-light.woff') format('woff'),
+         url('../fonts/light/barlow-light.ttf') format('truetype'),
+         url('../fonts/light/barlow-light.svg#barlow_condensedlight') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'barlow_thin';
+    src: url('../fonts/thin/barlowcondensed-thin.eot');
+    src: url('../fonts/thin/barlowcondensed-thin.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/thin/barlowcondensed-thin.woff2') format('woff2'),
+         url('../fonts/thin/barlowcondensed-thin.woff') format('woff'),
+         url('../fonts/thin/barlowcondensed-thin.ttf') format('truetype'),
+         url('../fonts/thin/barlowcondensed-thin.svg#barlow_condensedthin') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
