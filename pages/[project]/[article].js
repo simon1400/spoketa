@@ -40,17 +40,20 @@ export async function getServerSideProps({params, locale}) {
     }
   }
 
+  const settingGlobal = await sanityClient.fetch(`*[_type == 'global'][0]`)
+
   const links = await sanityClient.fetch(newQuery, { ids: JSON.stringify(data.links)})
 
   return {
     props: {
       data,
-      links
+      links,
+      settingGlobal
     }
   }
 }
 
-const Article = ({data, links}) => {
+const Article = ({data, links, settingGlobal}) => {
 
   const router = useRouter()
 
@@ -89,6 +92,8 @@ const Article = ({data, links}) => {
             image={urlFor(data?.meta?.image).width(1200).height(630).url()}
             ogTitle={data?.meta?.ogTitle}
             ogDescription={data?.meta?.ogDescription}
+            endTitle={settingGlobal?.endTitle}
+            gtm={settingGlobal?.gtm}
           >
       <section className="sec-head">
         <div className="uk-container">
@@ -218,7 +223,7 @@ const Article = ({data, links}) => {
             <div className="uk-width-1-1 uk-width-1-3@m">
               {data.colorSection.image && <div className="img-top-wrap">
                 <div className="img-top">
-                  <img src={urlFor(data.colorSection.image).width(432).url()} alt="Description top" />
+                  <img src={urlFor(data.colorSection.image).width(432).url()} alt="Omítky, zateplení, zednické práce - SPOKETA" />
                 </div>
               </div>}
             </div>
@@ -250,7 +255,7 @@ const Article = ({data, links}) => {
                         <div className="uk-panel">
                           <div className="galery-wrap-img">
                             <a href={urlFor(item.asset).url()} data-alt="Modal some">
-                              <img src={urlFor(item.asset).width(167).url()} alt="" />
+                              <img src={urlFor(item.asset).width(167).url()} alt="Omítky, zateplení, zednické práce - SPOKETA" />
                             </a>
                           </div>
                         </div>

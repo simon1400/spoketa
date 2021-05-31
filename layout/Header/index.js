@@ -23,6 +23,10 @@ const Header = () => {
       .catch(err => console.log(err));
   }, [])
 
+  useEffect(() => {
+    setActive(false)
+  }, [router.asPath])
+
   return(
     <header>
       <div className="uk-container">

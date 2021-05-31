@@ -5,7 +5,7 @@ import imageUrlBuilder from "@sanity/image-url";
 import sanityClient from "../../lib/sanity.js";
 const imageBuilder = imageUrlBuilder(sanityClient);
 const urlFor = source => imageBuilder.image(source)
-const query = `*[_type == 'settings']`;
+
 
 import Header from '../Header'
 import Footer from '../Footer'
@@ -25,34 +25,22 @@ const Page = ({
   noCrawl,
   tags,
   ogTitle = '',
-  ogDescription = ''
+  ogDescription = '',
+  endTitle,
+  gtm
 }) => {
 
   const router = useRouter()
   const [global, setGlobal] = useState({
     site_url: process.env.NODE_ENV === 'development' ? 'http://localhost:3003' : 'https://spoketa.cz',
     facebook_app_id: '',
-    defaultTitle: 'SPOKETA',
+    defaultTitle: endTitle || 'SPOKETA',
     defaultDescription: 'Spoketa',
     defaultImage: `${process.env.NODE_ENV === 'development' ? 'http://localhost:3003' : 'https://spoketa.cz'}`,
     defaultTwitter: '@cereallarceny',
     defaultSep: ' ',
-    gtm: ''
+    gtm: gtm || ''
   })
-
-  const getData = () => {
-    sanityClient.fetch(query).then(res => {
-      setGlobal({
-        ...global,
-        defaultTitle: res[0]?.endTitle || 'SPOKETA',
-        gtm: res[0]?.gtm || ''
-      })
-    })
-  }
-
-  useEffect(() => {
-    getData()
-  }, [])
 
   const theTitle = title ? (title + global.defaultSep + global.defaultTitle).substring(0, 60) : global.defaultTitle;
   const theDescription = description ? description.substring(0, 155) : global.defaultDescription;

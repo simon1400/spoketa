@@ -40,33 +40,38 @@ export async function getServerSideProps({params, locale}) {
     }
   }
 
+  const settingGlobal = await sanityClient.fetch(`*[_type == 'global'][0]`)
+
   var links = []
   if(data.links?.length){
     links = await sanityClient.fetch(newQuery, { ids: JSON.stringify(data.links)})
   }
 
-
   return {
     props: {
       data,
-      links
+      links,
+      settingGlobal
     }
   }
 }
 
-const Project = ({match, data, links}) => {
+const Project = ({match, data, links, settingGlobal}) => {
 
   const router = useRouter()
   const [state, setState] = useState({
-    width: 0,
-    height: 0,
+    width: '0',
+    height: '0',
     square: 0,
     price: 0
   })
 
-  const handleCalculate = (name, value) => {
+  const handleCalculate = (name, valueStr) => {
+    let value = valueStr.split(',').join('.')
     if((+value || value === '') && +value <= 1000){
       var newState = {...state}
+      newState.width = newState.width.split(',').join('.')
+      newState.height = newState.height.split(',').join('.')
       if(+value){
         if(value.substr(0, 1) === 0 || value.substr(0, 1) === "0"){
           newState[name] = value.substr(1, value.length)
@@ -74,10 +79,14 @@ const Project = ({match, data, links}) => {
           newState[name] = value
         }
       }else if(value === ''){
-        newState[name] = 0
+        newState[name] = '0'
       }
-      newState.square = Math.round(((newState.width * newState.height) + Number.EPSILON) * 100) / 100
+
+      newState.square = Math.round(((+newState.width * +newState.height) + Number.EPSILON) * 100) / 100
       newState.price = Math.round(((newState.square * data.colorSection.price) + Number.EPSILON) * 100) / 100
+      newState.width = newState.width.split('.').join(',')
+      newState.height = newState.height.split('.').join(',')
+
       setState({...newState})
     }
   }
@@ -92,6 +101,8 @@ const Project = ({match, data, links}) => {
             image={urlFor(data?.meta?.image).width(1200).height(630).url()}
             ogTitle={data?.meta?.ogTitle}
             ogDescription={data?.meta?.ogDescription}
+            endTitle={settingGlobal?.endTitle}
+            gtm={settingGlobal?.gtm}
             id="project">
       <section className="sec-head">
         <div className="uk-container">
@@ -258,7 +269,7 @@ const Project = ({match, data, links}) => {
                         <div className="uk-panel">
                           <div className="galery-wrap-img">
                             <a href={urlFor(item.asset).url()} data-alt="Modal some">
-                              <img src={urlFor(item.asset).width(167).url()} alt="" />
+                              <img src={urlFor(item.asset).width(167).url()} alt="Omítky, zateplení, zednické práce - SPOKETA" />
                             </a>
                           </div>
                         </div>

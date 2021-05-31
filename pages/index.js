@@ -28,6 +28,8 @@ export async function getServerSideProps({params, locale}) {
     slug
   }[0...100]`
 
+  const settingGlobal = await sanityClient.fetch(`*[_type == 'global'][0]`)
+
   const data = await sanityClient.fetch(query)
 
   const links = await sanityClient.fetch(newQuery, { ids: JSON.stringify(data.links)})
@@ -35,12 +37,13 @@ export async function getServerSideProps({params, locale}) {
   return {
     props: {
       data,
-      links
+      links,
+      settingGlobal
     }
   }
 }
 
-const Homepage = ({links, data}) => {
+const Homepage = ({links, data, settingGlobal}) => {
 
   if(data?._id){
     return ''
@@ -52,6 +55,8 @@ const Homepage = ({links, data}) => {
             image={urlFor(data?.meta?.image).width(1200).height(630).url()}
             ogTitle={data?.meta?.ogTitle}
             ogDescription={data?.meta?.ogDescription}
+            endTitle={settingGlobal?.endTitle}
+            gtm={settingGlobal?.gtm}
             id="homepage">
       <section className="sec-head">
         <div className="uk-container">
@@ -168,7 +173,7 @@ const Homepage = ({links, data}) => {
                         <div className="uk-panel">
                           <div className="galery-wrap-img">
                             <a href={urlFor(item.asset).url()} data-alt="Modal some">
-                              <img src={urlFor(item.asset).width(167).url()} alt={item._key} />
+                              <img src={urlFor(item.asset).width(167).url()} alt="Omítky, zateplení, zednické práce - SPOKETA" />
                             </a>
                           </div>
                         </div>
