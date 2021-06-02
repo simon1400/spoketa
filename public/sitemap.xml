@@ -1,41 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-                          <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url>
-      <loc>https://spoketa.cz/</loc>
+                          <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+                          <url>
+                             <loc>https://spoketa.cz/</loc>
+                          </url>
+                        <url>
       <loc>https://spoketa.cz/kontakt</loc>
    </url><url>
-      
       <loc>https://spoketa.cz/zatepleni-fasad</loc>
    </url><url>
-      
       <loc>https://spoketa.cz/zednicke-prace</loc>
    </url><url>
-      
       <loc>https://spoketa.cz/o-nasi-firme</loc>
    </url><url>
-      
       <loc>https://spoketa.cz/vnitrni-strojni-omitky</loc>
    </url><url>
-      
       <loc>https://spoketa.cz/vnitrni-strojni-omitky/sadrove-vnitrni-omitky</loc>
    </url><url>
-      
       <loc>https://spoketa.cz/vnitrni-strojni-omitky/sterkove-vnitrni-omitky</loc>
    </url><url>
-      
       <loc>https://spoketa.cz/vnitrni-strojni-omitky/stukove-vnitrni-omitky</loc>
    </url><url>
-      
       <loc>https://spoketa.cz/venkovni-strojni-omitky</loc>
    </url><url>
-      
       <loc>https://spoketa.cz/venkovni-strojni-omitky/paropropustna-nezateplena-fasada</loc>
    </url><url>
-      
       <loc>https://spoketa.cz/venkovni-strojni-omitky/silikonove-probarvene-omitky</loc>
    </url><url>
-      
       <loc>https://spoketa.cz/venkovni-strojni-omitky/stukove-vnejsi-omitky</loc>
    </url><url>
-      
       <loc>https://spoketa.cz/venkovni-strojni-omitky/sanacni-omitky</loc>
    </url></urlset>
