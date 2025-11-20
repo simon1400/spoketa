@@ -3,7 +3,7 @@ import Page from '../../layout/Page'
 import Breadcrumb from '../../components/breadcrumb'
 import ReactScroll from 'react-scroll'
 import Link from 'next/link'
-import BlockContent from "@sanity/block-content-to-react";
+import {PortableText} from "@portabletext/react";
 import sanityClient from "../../lib/sanity.js";
 import imageUrlBuilder from "@sanity/image-url";
 import { useRouter } from 'next/router'
@@ -98,7 +98,7 @@ const Project = ({match, data, links, settingGlobal}) => {
   return <Page
             title={data?.meta?.title}
             description={data?.meta?.description}
-            image={urlFor(data?.meta?.image).width(1200).height(630).url()}
+            image={data?.meta?.image ? urlFor(data.meta.image).width(1200).height(630).url() : ''}
             ogTitle={data?.meta?.ogTitle}
             ogDescription={data?.meta?.ogDescription}
             endTitle={settingGlobal?.endTitle}
@@ -136,7 +136,7 @@ const Project = ({match, data, links, settingGlobal}) => {
             {data.insideTitle || data.content ? <div className="uk-width-1-1">
               <div className="short-project-head home-short-item">
                 {data.insideTitle && <h2>{data.insideTitle}</h2>}
-                {data.content && <BlockContent blocks={data.content} />}
+                {data.content && <PortableText value={data.content} />}
               </div>
             </div> : ''}
 
@@ -157,14 +157,14 @@ const Project = ({match, data, links, settingGlobal}) => {
                         <div className="uk-width-auto">
                           <div className="short-project-img-wrap">
                             {item.image && <img src={urlFor(item.image).width(252).url()} alt={item.title}/>}
-                            {links[index] && <Link href={`/${router.query.project}/${link_current}`}><a className="button_link">
+                            {links[index] && <Link href={`/${router.query.project}/${link_current}`} className="button_link">
                               <img className="uk-svg" src="/assets/right.svg" uk-svg="" alt="right" />
-                            </a></Link>}
+                            </Link>}
                           </div>
                         </div>
                         <div className="uk-width-expand">
-                          {item.title && <h2><Link href={`/${router.query.project}/${link_current}`}><a>{item.title}</a></Link></h2>}
-                          {item.content && <BlockContent blocks={item.content} />}
+                          {item.title && <h2><Link href={`/${router.query.project}/${link_current}`}>{item.title}</Link></h2>}
+                          {item.content && <PortableText value={item.content} />}
                         </div>
                       </div>
                     </div>
@@ -182,7 +182,7 @@ const Project = ({match, data, links, settingGlobal}) => {
                         </div>
                         <div className="uk-width-expand">
                           {item.title && <h2>{item.title}</h2>}
-                          {item.content && <BlockContent blocks={item.content} />}
+                          {item.content && <PortableText value={item.content} />}
                         </div>
                       </div>
                     </div>
@@ -235,7 +235,7 @@ const Project = ({match, data, links, settingGlobal}) => {
             </div>
 
             <div className="uk-width-1-1 uk-width-1-3@m">
-              {data.colorSection.image && <div className="img-top-wrap">
+              {data.colorSection?.image?.asset && <div className="img-top-wrap">
                 <div className="img-top">
                   <img src={urlFor(data.colorSection.image).width(432).url()} alt={data.colorSection.title} />
                 </div>
@@ -251,7 +251,7 @@ const Project = ({match, data, links, settingGlobal}) => {
           <div className="uk-grid uk-child-width-1-1" uk-grid="">
             <div>
               {data.galery.title && <h2>{data.galery.title}</h2>}
-              {data.galery.content && <BlockContent blocks={data.galery.content} />}
+              {data.galery.content && <PortableText value={data.galery.content} />}
             </div>
           </div>
         </div>

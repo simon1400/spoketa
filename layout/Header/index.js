@@ -33,7 +33,7 @@ const Header = () => {
         <div className="uk-grid uk-grid-collapse uk-grid-stack" uk-grid="">
           <div className="uk-width-2-3 uk-width-1-4@m">
             <div className="logo-wrap">
-              <Link href="/"><a><img className="uk-svg" src="/assets/logo.svg" uk-svg="" alt="Spoketa" /></a></Link>
+              <Link href="/"><img className="uk-svg" src="/assets/logo.svg" uk-svg="" alt="Spoketa" /></Link>
             </div>
           </div>
           <div className="uk-width-1-3 uk-width-3-4@m">
@@ -49,7 +49,7 @@ const Header = () => {
               <ul>
                 {dataArray.map((item, index) => <li key={index} className={item.slug.current === router.query.project ? "active-mnu" : ''}>
                   <Link href={`/${item.slug.current}`}>
-                    <a>{item.menu}</a>
+                    {item.menu}
                   </Link>
                 </li>)}
               </ul>

@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import Page from '../layout/Page'
 import ReactScroll from 'react-scroll'
-import BlockContent from "@sanity/block-content-to-react";
+import {PortableText} from "@portabletext/react";
 import sanityClient from "../lib/sanity.js";
 import imageUrlBuilder from "@sanity/image-url";
 import Link from 'next/link'
@@ -52,7 +52,7 @@ const Homepage = ({links, data, settingGlobal}) => {
   return <Page
             title={data?.meta?.title}
             description={data?.meta?.description}
-            image={urlFor(data?.meta?.image).width(1200).height(630).url()}
+            image={data?.meta?.image ? urlFor(data.meta.image).width(1200).height(630).url() : ''}
             ogTitle={data?.meta?.ogTitle}
             ogDescription={data?.meta?.ogDescription}
             endTitle={settingGlobal?.endTitle}
@@ -104,9 +104,9 @@ const Homepage = ({links, data, settingGlobal}) => {
                 link_current = link_current[0].slug.current
                 return (
                   <div key={item._key} className="home-short-item">
-                    <h2><Link href={link_current}><a>{item.title}</a></Link></h2>
-                    {item.content && <BlockContent blocks={item.content} />}
-                    <Link href={link_current}><a className="button_bare">Více informací <img className="uk-svg" src="/assets/right.svg" uk-svg="" height="13" alt="Arrow right" /></a></Link>
+                    <h2><Link href={link_current}>{item.title}</Link></h2>
+                    {item.content && <PortableText value={item.content} />}
+                    <Link href={link_current} className="button_bare">Více informací <img className="uk-svg" src="/assets/right.svg" uk-svg="" height="13" alt="Arrow right" /></Link>
                   </div>
                 )
               }
@@ -126,8 +126,8 @@ const Homepage = ({links, data, settingGlobal}) => {
                 <div className="top-info">
                   <span>Garance kvality</span>
                   <h1>{data.colorSection.title}</h1>
-                  {data.colorSection?.content && <BlockContent blocks={data.colorSection.content} />}
-                  <Link href={`/${data.colorSection.link}`}><a className="button_blue">Více o nás <img className="uk-svg" src="/assets/right.svg" uk-svg="" height="13" alt="Arrow right" /></a></Link>
+                  {data.colorSection?.content && <PortableText value={data.colorSection.content} />}
+                  <Link href={`/${data.colorSection.link}`} className="button_blue">Více o nás <img className="uk-svg" src="/assets/right.svg" uk-svg="" height="13" alt="Arrow right" /></Link>
                 </div>
               </div>
             </div>
@@ -155,7 +155,7 @@ const Homepage = ({links, data, settingGlobal}) => {
           <div className="uk-grid uk-child-width-1-1" uk-grid="">
             <div>
               <h2>{data.galery.title}</h2>
-              {data.galery?.content && <BlockContent blocks={data.galery.content} />}
+              {data.galery?.content && <PortableText value={data.galery.content} />}
             </div>
           </div>
         </div>
