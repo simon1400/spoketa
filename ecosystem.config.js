@@ -4,6 +4,7 @@ module.exports = {
       name: 'spoketa-client',
       script: 'node_modules/next/dist/bin/next',
       args: 'start -p 3003',
+      exec_mode: 'fork',
       instances: 1,
       autorestart: true,
       watch: false,
@@ -20,13 +21,9 @@ module.exports = {
       out_file: './logs/pm2-out.log',
       log_date_format: 'YYYY-MM-DD HH:mm:ss Z',
       merge_logs: true,
-      // Стратегия перезапуска
       min_uptime: '10s',
       max_restarts: 10,
-      // Graceful shutdown
-      kill_timeout: 5000,
-      wait_ready: true,
-      listen_timeout: 10000
+      kill_timeout: 5000
     }
   ]
 };
