@@ -10,6 +10,38 @@ const urlFor = source => imageBuilder.image(source)
 import Header from '../Header'
 import Footer from '../Footer'
 
+// Suppress UIKit hydration warnings
+if (typeof window !== 'undefined') {
+  const originalError = console.error;
+  console.error = (...args) => {
+    if (typeof args[0] === 'string' && (
+      args[0].includes('Extra attributes from the server') ||
+      args[0].includes('Hydration failed') ||
+      args[0].includes('did not match') ||
+      args[0].includes('uk-grid') ||
+      args[0].includes('uk-svg') ||
+      args[0].includes('uk-img') ||
+      args[0].includes('uk-lightbox') ||
+      args[0].includes('uk-slider')
+    )) {
+      return;
+    }
+    originalError.apply(console, args);
+  };
+
+  const originalWarn = console.warn;
+  console.warn = (...args) => {
+    if (typeof args[0] === 'string' && (
+      args[0].includes('Extra attributes from the server') ||
+      args[0].includes('Hydration') ||
+      args[0].includes('did not match')
+    )) {
+      return;
+    }
+    originalWarn.apply(console, args);
+  };
+}
+
 const Page = ({
   children,
   id,
@@ -99,10 +131,10 @@ const Page = ({
         {tags && <meta name="article:tag" content={tags} />}
       </Head>
 
-      
+
 
       <Header />
-      <main id={id} className={className}>{children}</main>
+      <main id={id} className={className} suppressHydrationWarning>{children}</main>
       <Footer />
 
     </div>
